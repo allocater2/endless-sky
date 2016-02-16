@@ -40,7 +40,7 @@ namespace {
 	static const int EXTRA_X = 100;
 	
 	static const int FIRST_Y = 78;
-	static const int MAX_VISIBLE_MORTGAGES = 8;
+	static const int MAX_VISIBLE_TABLE_ROWS = 8;
 	
 	static const string HEADING[6] = {"Type", "Principal", "Interest", "Term", "Payment", ""};
 }
@@ -240,7 +240,9 @@ bool BankPanel::Click(int x, int y)
 			return DoKey(key);
 	}
 	
-	int maxY = FIRST_Y + 25 + 20 * min(MAX_VISIBLE_MORTGAGES,player.Accounts().Mortgages().size());
+	bool hasSalaries = (player.Salaries() != 0);
+	int maxVisibleMortgages = MAX_VISIBLE_TABLE_ROWS - hasSalaries;
+	int maxY = FIRST_Y + 25 + 20 * min(maxVisibleMortgages, player.Accounts().Mortgages().size());
 	if(x >= MIN_X && x <= MAX_X && y >= FIRST_Y + 25 && y < maxY)
 	{
 		selectedRow = (y - FIRST_Y - 25) / 20;
